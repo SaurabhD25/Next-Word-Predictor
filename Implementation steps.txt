@@ -1,0 +1,36 @@
+1) LOADING DATASET AND PREPROCESSING:
+
+	Step1: Initially, we stored the dataset into a local directory.
+
+	Step2: Then we read the dataset into a string and convert all the characters of the lowercase to reduce the complexity of the 	data and to simplify the implementation of the model.
+
+	Step3: Then we split the string which contains the text dataset into 200266 sentences with each sentence overlapping the 	previous sentence barring the first 3 characters. The length of every sentence was kept as 40. This was done for every 	sentence and all these sentences were stored in an array. And the sentences were paired with their respective next immediate 	characters.
+
+	Step 4: Then to prepare and construct the data properly to give it as input to the LSTM Neural Network, the array containing 	all sentences was converted into a 3 dimensional One-Hot Encoding vector. In this vector, the particular position and char 	index of every character was valued as True.
+	For example, if X is the vector and 1st character in sentences array is ‘p’ and it’s character index is 40, then X[0,0,40] = 	True and all other values at X[0,0,40] will be False.
+	The array of next character of every sentence was converted into a 2 dimensional One-Hot Encoding vector in the same way the 	3D vector was constructed.
+
+2) TRAINING:
+
+	Step 5: The 3D vector was given as input to the first layer in the Neural Network which is the LSTM layer. The layer consists 	of 128 neurons.
+
+	Step 6: A Dropout layer was added after the LSTM layer to prevent overfitting. The Dropout value was given as 0.2 which is 	ideal for natural language models.
+
+	Step 7: Then the output Dense layer was added. This layer consists of 53 neurons which is same as the no. of unique characters 	of the dataset. Each neuron of this layer is a unique character from the dataset.
+
+	Step 8: The final layer is the softmax layer which computes the probability of occurrence of every unique character and stores 	them in an array.
+
+	Step 9: Then the model was fit to our prepared data. The batch size was kept 128 and the data was split into training set and 	validation set with a validation split of 5%. 
+	Model weights were obtained after fitting the model and were stored in the .h5 file format in a local directory.
+
+3) TESTING THE MODEL:
+
+	Step 10: To test the dataset the model weights (.h5 file) were read.
+
+	Step 11: A random 40-character sentence which was in the context of the dataset. This sentence array was converted into One 	Hot Encoding vector. The vector was passed to the predict function of the loaded model object and the prediction matrix was 	obtained. The matrix consists of the probabilities of all unique characters.
+
+	Step 12: The max probability was filtered out from the array. The character with that probability was printed out as output.
+
+	Step 13: The previous step can be run several times to predict words and phrases according to our need.
+
+This is how our Neural Network model was implemented.
